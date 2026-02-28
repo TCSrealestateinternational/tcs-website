@@ -261,21 +261,25 @@
   <!-- Referral Modal — shown when a client clicks a Real Estate Agent marker (non-owner) -->
   <div id="referral-modal" class="pro-modal" role="dialog" aria-modal="true" aria-labelledby="referral-modal-title" hidden>
     <div class="pro-modal__overlay"></div>
-    <div class="pro-modal__content">
+    <div class="pro-modal__content pro-modal__content--wide">
       <button class="pro-modal__close" aria-label="Close this dialog">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <span class="eyebrow">Request an Introduction</span>
-      <h2 id="referral-modal-title" style="margin-bottom:var(--space-sm);">Connect with <span id="referral-agent-name"></span></h2>
-      <p style="color:var(--tcs-text-light); margin-bottom:var(--space-lg);">Fill out the form below and our team will personally connect you with this agent. This ensures a smooth, supported introduction and helps us maintain the quality of our directory.</p>
-      <!-- PLACEHOLDER: Replace with GHL referral form iframe or embed when available -->
-      <div class="pro-modal__placeholder">
-        <div style="text-align:center; padding:var(--space-xl); background:var(--tcs-cream-bg); border-radius:var(--radius-lg); border:2px dashed var(--tcs-border);">
-          <p style="font-weight:700; color:var(--tcs-teal-dark); margin-bottom:var(--space-xs);">Referral form coming soon.</p>
-          <p style="font-size:.9375rem; color:var(--tcs-text-light); margin-bottom:var(--space-md);">In the meantime, reach out to us directly and we will make the connection:</p>
-          <a href="mailto:toni@tcsrealestateinternational.com" style="font-size:1rem; font-weight:700; color:var(--tcs-teal);">toni@tcsrealestateinternational.com</a>
-        </div>
-      </div>
+      <h2 id="referral-modal-title" style="margin-bottom:.375rem;">Connect with <span id="referral-agent-name"></span></h2>
+      <p style="color:var(--tcs-text-light); margin-bottom:0; font-size:.9375rem;">Our team will personally make this connection so you get a smooth, supported introduction.</p>
+      <!-- GHL referral form — form ID 3albvumYqIQzPMiP1vqE -->
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/3albvumYqIQzPMiP1vqE"
+        class="pro-modal__iframe"
+        title="Request an introduction to a real estate agent"
+        loading="lazy"
+        allow="forms"
+      ></iframe>
+      <p class="pro-modal__iframe-fallback">
+        Form not loading?
+        <a href="https://api.leadconnectorhq.com/widget/form/3albvumYqIQzPMiP1vqE" target="_blank" rel="noopener noreferrer">Open it in a new tab</a>
+      </p>
     </div>
   </div>
 
