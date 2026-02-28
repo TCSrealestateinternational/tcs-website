@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL Map Application — Non-Realtor Professionals | TCS Real Estate International</title>
+
+  <!--
+    ============================================================
+    GHL INTEGRATION NOTES
+    ============================================================
+    Option A — GHL Native Forms:
+      Use this file as a visual reference when building the form
+      in GHL's Form Builder (Marketing > Forms). Match labels,
+      helper text, field types, and option values exactly.
+
+    Option B — Custom HTML Embed:
+      Paste everything inside <body> (including the <style> block)
+      into a GHL Custom HTML element on a funnel/website page.
+      Replace the form action URL with your GHL webhook endpoint.
+
+    File upload (headshot) requires a GHL webhook or custom
+    backend — it cannot submit directly to standard GHL forms.
+    ============================================================
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       TCS REI Brand Tokens
+       ============================================================ */
+    :root {
+      --teal-dark:   #0c414e;
+      --teal:        #0e5a6e;
+      --teal-light:  #1a7a94;
+      --terra:       #9d442a;
+      --terra-dark:  #7e3520;
+      --gold:        #bc804d;
+      --gold-dark:   #a06b3a;
+      --cream-bg:    #faf7f4;
+      --cream-light: #f5efe9;
+      --white:       #ffffff;
+      --border:      #e5ddd3;
+      --text:        #2d2a26;
+      --text-light:  #5c574f;
+      --text-muted:  #8a8478;
+      --radius:      6px;
+      --radius-lg:   12px;
+      --shadow-sm:   0 1px 3px rgba(12,65,78,.06);
+      --shadow-md:   0 4px 16px rgba(12,65,78,.08);
+      --shadow-lg:   0 8px 30px rgba(12,65,78,.10);
+    }
+
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+    body {
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--cream-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================================
+       Page wrapper
+       ============================================================ */
+    .form-page {
+      min-height: 100vh;
+      padding: 3rem 1.25rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 2.5rem;
+      text-decoration: none;
+    }
+
+    .form-brand img {
+      height: 40px;
+      width: auto;
+    }
+
+    /* ============================================================
+       Form card
+       ============================================================ */
+    .form-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 700px;
+      overflow: hidden;
+    }
+
+    /* Accent bar at top */
+    .form-card::before {
+      content: '';
+      display: block;
+      height: 5px;
+      background: linear-gradient(90deg, var(--teal-dark) 0%, var(--teal-light) 60%, var(--gold) 100%);
+    }
+
+    /* ============================================================
+       Form header
+       ============================================================ */
+    .form-header {
+      padding: 2.25rem 2.5rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--cream-light);
+    }
+
+    .form-eyebrow {
+      display: block;
+      font-size: .6875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--terra);
+      margin-bottom: .5rem;
+    }
+
+    .form-title {
+      font-size: clamp(1.375rem, 3.5vw, 1.875rem);
+      font-weight: 800;
+      color: var(--teal-dark);
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      margin-bottom: .875rem;
+    }
+
+    .form-intro {
+      font-size: .9375rem;
+      color: var(--text-light);
+      line-height: 1.65;
+      max-width: 60ch;
+      margin-bottom: .75rem;
+    }
+
+    .form-intro p + p { margin-top: .5rem; }
+
+    .form-required-note {
+      font-size: .8125rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .form-required-note strong { color: var(--terra); font-style: normal; }
+
+    /* ============================================================
+       Form body
+       ============================================================ */
+    .form-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    /* ============================================================
+       Sections
+       ============================================================ */
+    .form-section {
+      margin-bottom: 2.25rem;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .form-section__header {
+      display: flex;
+      align-items: center;
+      gap: .625rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section__num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--teal-dark);
+      color: var(--white);
+      font-size: .6875rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      letter-spacing: 0;
+    }
+
+    .form-section__title {
+      font-size: .6875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--teal-dark);
+      margin-bottom: 0;
+    }
+
+    /* ============================================================
+       Row + field layout
+       ============================================================ */
+    .form-row {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-row--2 { grid-template-columns: 1fr 1fr; }
+    .form-row--1 { grid-template-columns: 1fr; }
+
+    @media (max-width: 540px) {
+      .form-row--2 { grid-template-columns: 1fr; }
+      .form-header,
+      .form-body { padding-left: 1.25rem; padding-right: 1.25rem; }
+    }
+
+    .form-field { display: flex; flex-direction: column; }
+
+    /* ============================================================
+       Labels
+       ============================================================ */
+    .form-label {
+      display: block;
+      font-size: .8125rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      margin-bottom: .375rem;
+      line-height: 1.4;
+    }
+
+    .form-label .req {
+      color: var(--terra);
+      margin-left: 2px;
+      font-weight: 800;
+    }
+
+    /* ============================================================
+       Inputs, selects, textareas
+       ============================================================ */
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: .6875rem .9375rem;
+      font-family: 'Manrope', system-ui, sans-serif;
+      font-size: .9375rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      line-height: 1.5;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input::placeholder { color: var(--text-muted); font-weight: 400; }
+    .form-textarea::placeholder { color: var(--text-muted); font-weight: 400; }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(14,90,110,.12);
+    }
+
+    .form-input:invalid:not(:placeholder-shown),
+    .form-select:invalid:not(:placeholder-shown) {
+      border-color: var(--terra);
+    }
+
+    /* Select arrow */
+    .form-select-wrap { position: relative; }
+
+    .form-select-wrap::after {
+      content: '';
+      position: absolute;
+      right: .9375rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--text-muted);
+      pointer-events: none;
+    }
+
+    .form-select { padding-right: 2.5rem; cursor: pointer; }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* ============================================================
+       Helper text
+       ============================================================ */
+    .form-helper {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: .325rem;
+      line-height: 1.5;
+    }
+
+    .form-helper--highlight {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       File upload
+       ============================================================ */
+    .form-file-wrap {
+      position: relative;
+    }
+
+    .form-file-label {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .875rem 1rem;
+      background: var(--cream-light);
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 150ms ease, background 150ms ease;
+      font-size: .875rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .form-file-label:hover {
+      border-color: var(--teal-light);
+      background: var(--white);
+    }
+
+    .form-file-label svg { flex-shrink: 0; color: var(--teal); }
+
+    .form-file-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+    }
+
+    .form-file-input:focus + .form-file-label {
+      outline: 3px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .form-file-name {
+      font-size: .75rem;
+      color: var(--teal);
+      font-weight: 600;
+      margin-top: .325rem;
+      display: none;
+    }
+
+    /* ============================================================
+       Checkboxes
+       ============================================================ */
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .form-check:last-child { margin-bottom: 0; }
+
+    .form-check input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      background: var(--white);
+      cursor: pointer;
+      position: relative;
+      margin-top: .175rem;
+      transition: border-color 150ms ease, background 150ms ease;
+    }
+
+    .form-check input[type="checkbox"]:checked {
+      background: var(--teal-dark);
+      border-color: var(--teal-dark);
+    }
+
+    .form-check input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 8px;
+      height: 12px;
+      border: 2.5px solid var(--white);
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .form-check input[type="checkbox"]:focus {
+      outline: 3px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .form-check-text {
+      font-size: .875rem;
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .form-check-text .req {
+      color: var(--terra);
+      font-weight: 800;
+    }
+
+    /* ============================================================
+       Conditional "Other" field
+       ============================================================ */
+    .form-conditional {
+      display: none;
+      margin-top: .75rem;
+    }
+
+    .form-conditional.visible { display: block; }
+
+    /* ============================================================
+       Submit section
+       ============================================================ */
+    .form-submit-section {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2.25rem;
+    }
+
+    .form-submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      font-family: 'Manrope', system-ui, sans-serif;
+      font-size: .875rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--terra);
+      border: 2px solid var(--terra);
+      border-radius: var(--radius);
+      padding: .9375rem 2.25rem;
+      cursor: pointer;
+      min-height: 52px;
+      width: 100%;
+      transition: background 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    .form-submit-btn:hover {
+      background: var(--terra-dark);
+      border-color: var(--terra-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .form-submit-btn:focus {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .form-submit-btn:active { transform: translateY(0); }
+
+    .form-submit-note {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: .75rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       Success message (shown after submission)
+       ============================================================ */
+    .form-success {
+      display: none;
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .form-success__icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--teal-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .form-success__title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--teal-dark);
+      margin-bottom: .75rem;
+      letter-spacing: -.02em;
+    }
+
+    .form-success__body {
+      font-size: .9375rem;
+      color: var(--text-light);
+      max-width: 48ch;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       Footer credit
+       ============================================================ */
+    .form-footer {
+      margin-top: 1.5rem;
+      font-size: .75rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .form-footer a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    .form-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="form-page">
+
+  <!-- Brand logo link -->
+  <a href="https://tcsrealestateinternational.com" class="form-brand" aria-label="TCS Real Estate International — return to homepage">
+    <img src="https://tcsrealestateinternational.com/images/plain__1_.png" alt="TCS Real Estate International">
+  </a>
+
+  <div class="form-card" role="main">
+
+    <!-- Header -->
+    <div class="form-header">
+      <span class="form-eyebrow">ASL-Fluent Pro Directory</span>
+      <h1 class="form-title">Get Featured on the ASL-Fluent Real Estate Pro Map</h1>
+      <div class="form-intro">
+        <p>Submit your info to be listed so Deaf and Hard of Hearing clients can find you by state. We review all submissions for accuracy and professionalism.</p>
+        <p>If you serve multiple states, please fill out one form per state.</p>
+      </div>
+      <p class="form-required-note">Fields marked <strong>*</strong> are required.</p>
+    </div>
+
+    <!-- Form -->
+    <!--
+      Replace action="#" with your GHL form webhook URL.
+      Example: action="https://services.leadconnectorhq.com/hooks/..."
+    -->
+    <form
+      id="asl-map-form"
+      class="form-body"
+      method="post"
+      action="#"
+      enctype="multipart/form-data"
+      novalidate
+    >
+
+      <!-- ── Section 1: Contact Info ── -->
+      <section class="form-section" aria-labelledby="sec1-title">
+        <div class="form-section__header">
+          <span class="form-section__num" aria-hidden="true">1</span>
+          <h2 class="form-section__title" id="sec1-title">Contact Info</h2>
+        </div>
+
+        <div class="form-row form-row--2">
+          <div class="form-field">
+            <label class="form-label" for="first-name">First Name <span class="req" aria-label="required">*</span></label>
+            <input class="form-input" type="text" id="first-name" name="first_name" autocomplete="given-name" required placeholder="Jane">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="last-name">Last Name <span class="req" aria-label="required">*</span></label>
+            <input class="form-input" type="text" id="last-name" name="last_name" autocomplete="family-name" required placeholder="Smith">
+          </div>
+        </div>
+
+        <div class="form-row form-row--2">
+          <div class="form-field">
+            <label class="form-label" for="email">Email Address <span class="req" aria-label="required">*</span></label>
+            <input class="form-input" type="email" id="email" name="email" autocomplete="email" required placeholder="jane@example.com">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="phone">Phone Number <span class="req" aria-label="required">*</span></label>
+            <input class="form-input" type="tel" id="phone" name="phone" autocomplete="tel" required placeholder="(555) 555-5555">
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Section 2: Licensing + Service Area ── -->
+      <section class="form-section" aria-labelledby="sec2-title">
+        <div class="form-section__header">
+          <span class="form-section__num" aria-hidden="true">2</span>
+          <h2 class="form-section__title" id="sec2-title">Licensing &amp; Service Area</h2>
+        </div>
+
+        <div class="form-row form-row--1">
+          <div class="form-field">
+            <label class="form-label" for="profession-type">Professional Type <span class="req" aria-label="required">*</span></label>
+            <div class="form-select-wrap">
+              <select class="form-select" id="profession-type" name="profession_type" required aria-required="true">
+                <option value="" disabled selected>Select your profession…</option>
+                <option value="Mortgage Lender">Mortgage Lender</option>
+                <option value="Home Inspector">Home Inspector</option>
+                <option value="Title / Escrow">Title / Escrow</option>
+                <option value="Real Estate Attorney">Real Estate Attorney</option>
+                <option value="Appraiser">Appraiser</option>
+                <option value="Insurance Agent">Insurance Agent</option>
+                <option value="Contractor / Builder">Contractor / Builder</option>
+                <option value="Photographer">Photographer</option>
+                <option value="Transaction Coordinator">Transaction Coordinator</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Shown only when "Other" is selected -->
+            <div class="form-conditional" id="other-profession-wrap">
+              <label class="form-label" for="profession-other">Please describe your profession <span class="req" aria-label="required">*</span></label>
+              <input class="form-input" type="text" id="profession-other" name="profession_other" placeholder="e.g., Moving Company, Staging Specialist…">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row form-row--1">
+          <div class="form-field">
+            <label class="form-label" for="state">State Licensed / Operating In <span class="req" aria-label="required">*</span></label>
+            <div class="form-select-wrap">
+              <select class="form-select" id="state" name="state" required aria-required="true">
+                <option value="" disabled selected>Select a state…</option>
+                <option>Alabama</option>
+                <option>Alaska</option>
+                <option>Arizona</option>
+                <option>Arkansas</option>
+                <option>California</option>
+                <option>Colorado</option>
+                <option>Connecticut</option>
+                <option>Delaware</option>
+                <option>District of Columbia</option>
+                <option>Florida</option>
+                <option>Georgia</option>
+                <option>Hawaii</option>
+                <option>Idaho</option>
+                <option>Illinois</option>
+                <option>Indiana</option>
+                <option>Iowa</option>
+                <option>Kansas</option>
+                <option>Kentucky</option>
+                <option>Louisiana</option>
+                <option>Maine</option>
+                <option>Maryland</option>
+                <option>Massachusetts</option>
+                <option>Michigan</option>
+                <option>Minnesota</option>
+                <option>Mississippi</option>
+                <option>Missouri</option>
+                <option>Montana</option>
+                <option>Nebraska</option>
+                <option>Nevada</option>
+                <option>New Hampshire</option>
+                <option>New Jersey</option>
+                <option>New Mexico</option>
+                <option>New York</option>
+                <option>North Carolina</option>
+                <option>North Dakota</option>
+                <option>Ohio</option>
+                <option>Oklahoma</option>
+                <option>Oregon</option>
+                <option>Pennsylvania</option>
+                <option>Rhode Island</option>
+                <option>South Carolina</option>
+                <option>South Dakota</option>
+                <option>Tennessee</option>
+                <option>Texas</option>
+                <option>Utah</option>
+                <option>Vermont</option>
+                <option>Virginia</option>
+                <option>Washington</option>
+                <option>West Virginia</option>
+                <option>Wisconsin</option>
+                <option>Wyoming</option>
+              </select>
+            </div>
+            <p class="form-helper">If you serve multiple states, submit one form per state.</p>
+          </div>
+        </div>
+
+        <div class="form-row form-row--1">
+          <div class="form-field">
+            <label class="form-label" for="cities">City / Cities You Serve <span class="req" aria-label="required">*</span></label>
+            <input class="form-input" type="text" id="cities" name="cities_served" required placeholder="Louisville, Lexington, surrounding counties">
+            <p class="form-helper">List your primary cities or regions so we can display the best match on the map.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Section 3: ASL + Accessibility ── -->
+      <section class="form-section" aria-labelledby="sec3-title">
+        <div class="form-section__header">
+          <span class="form-section__num" aria-hidden="true">3</span>
+          <h2 class="form-section__title" id="sec3-title">ASL &amp; Accessibility</h2>
+        </div>
+
+        <div class="form-row form-row--2">
+          <div class="form-field">
+            <label class="form-label" for="asl-level">ASL Proficiency Level <span class="req" aria-label="required">*</span></label>
+            <div class="form-select-wrap">
+              <select class="form-select" id="asl-level" name="asl_proficiency" required aria-required="true">
+                <option value="" disabled selected>Select level…</option>
+                <option value="Native ASL User (Deaf/HoH)">Native ASL User (Deaf / HoH)</option>
+                <option value="Fluent ASL (hearing)">Fluent ASL (hearing)</option>
+                <option value="Conversational ASL">Conversational ASL</option>
+                <option value="Working with a certified interpreter">Working with a certified interpreter</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="deaf-hoh">Are You Deaf or Hard of Hearing? <span class="req" aria-label="required">*</span></label>
+            <div class="form-select-wrap">
+              <select class="form-select" id="deaf-hoh" name="deaf_or_hoh" required aria-required="true">
+                <option value="" disabled selected>Select…</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Section 4: Online Presence ── -->
+      <section class="form-section" aria-labelledby="sec4-title">
+        <div class="form-section__header">
+          <span class="form-section__num" aria-hidden="true">4</span>
+          <h2 class="form-section__title" id="sec4-title">Online Presence</h2>
+        </div>
+
+        <div class="form-row form-row--1">
+          <div class="form-field">
+            <label class="form-label" for="website">Website or Social Media Link</label>
+            <input class="form-input" type="url" id="website" name="website_url" placeholder="https:// — LinkedIn, Instagram, website, etc.">
+            <p class="form-helper form-helper--highlight">Highly recommended — a link helps clients verify your work and increases trust in your listing.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Section 5: Photo + Notes ── -->
+      <section class="form-section" aria-labelledby="sec5-title">
+        <div class="form-section__header">
+          <span class="form-section__num" aria-hidden="true">5</span>
+          <h2 class="form-section__title" id="sec5-title">Photo &amp; Additional Notes</h2>
+        </div>
+
+        <div class="form-row form-row--1">
+          <div class="form-field">
+            <label class="form-label" id="headshot-label">
+              Professional Headshot <span class="req" aria-label="required">*</span>
+            </label>
+            <div class="form-file-wrap">
+              <input
+                class="form-file-input"
+                type="file"
+                id="headshot"
+                name="headshot"
+                accept="image/jpeg,image/png,image/webp"
+                aria-labelledby="headshot-label"
+                aria-required="true"
+              >
+              <label class="form-file-label" for="headshot">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <span id="headshot-file-label">Click to upload or drag and drop your photo here</span>
+              </label>
+              <p class="form-file-name" id="headshot-file-name" aria-live="polite"></p>
+            </div>
+            <p class="form-helper">Clear, front-facing photo preferred. No logos or group photos. JPG or PNG, under 5 MB.</p>
+          </div>
+        </div>
+
+        <div class="form-row form-row--1">
+          <div class="form-field">
+            <label class="form-label" for="additional-info">Additional Information</label>
+            <textarea
+              class="form-textarea"
+              id="additional-info"
+              name="additional_info"
+              rows="5"
+              placeholder="Tell us more about yourself. Examples:&#10;• Your role (lender, title, inspector, attorney, etc.)&#10;• Specialties (VA loans, first-time buyers, new builds, land, etc.)&#10;• Preferred contact method for Deaf clients (text / email / video call)"
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Section 6: Confirmation + Consent ── -->
+      <section class="form-section" aria-labelledby="sec6-title">
+        <div class="form-section__header">
+          <span class="form-section__num" aria-hidden="true">6</span>
+          <h2 class="form-section__title" id="sec6-title">Confirmation &amp; Consent</h2>
+        </div>
+
+        <label class="form-check">
+          <input type="checkbox" name="confirm_licensed" value="yes" required aria-required="true">
+          <span class="form-check-text">
+            I confirm that I am actively licensed and in good standing in the state(s) I serve. <span class="req" aria-label="required">*</span>
+          </span>
+        </label>
+
+        <label class="form-check">
+          <input type="checkbox" name="authorize_display" value="yes" required aria-required="true">
+          <span class="form-check-text">
+            I authorize my submitted information to be displayed publicly on the ASL-Fluent Pro Map operated by TCS Real Estate International. <span class="req" aria-label="required">*</span>
+          </span>
+        </label>
+      </section>
+
+      <!-- ── Submit ── -->
+      <div class="form-submit-section">
+        <button type="submit" class="form-submit-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Request to Be Featured
+        </button>
+        <p class="form-submit-note">Your submission is reviewed before it goes live. We'll reach out if we have questions.</p>
+      </div>
+
+    </form>
+
+    <!-- ── Success message (hidden until form submits) ── -->
+    <div class="form-success" id="form-success" role="alert" aria-live="assertive">
+      <div class="form-success__icon" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2 class="form-success__title">Thanks! We received your request.</h2>
+      <p class="form-success__body">If anything needs clarification, we'll email you. Once approved, your listing will appear on the map.</p>
+    </div>
+
+  </div><!-- /form-card -->
+
+  <p class="form-footer">
+    <a href="https://tcsrealestateinternational.com">TCS Real Estate International</a> &mdash;
+    Accessible real estate education built for everyone.
+  </p>
+
+</div><!-- /form-page -->
+
+<script>
+  /* ── "Other" profession: show/hide conditional field ── */
+  const profSelect   = document.getElementById('profession-type');
+  const otherWrap    = document.getElementById('other-profession-wrap');
+  const otherInput   = document.getElementById('profession-other');
+
+  profSelect.addEventListener('change', function () {
+    const isOther = this.value === 'Other';
+    otherWrap.classList.toggle('visible', isOther);
+    otherInput.required = isOther;
+    if (!isOther) otherInput.value = '';
+  });
+
+  /* ── File upload: show selected filename ── */
+  const fileInput    = document.getElementById('headshot');
+  const fileNameEl   = document.getElementById('headshot-file-name');
+  const fileLabelEl  = document.getElementById('headshot-file-label');
+
+  fileInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+      const name = this.files[0].name;
+      fileNameEl.textContent = 'Selected: ' + name;
+      fileNameEl.style.display = 'block';
+      fileLabelEl.textContent = name;
+    }
+  });
+
+  /* ── Success state ── */
+  /*
+    When connected to GHL: GHL handles the success redirect/message.
+    This JS handler is a fallback for non-GHL form testing.
+    Remove or disable this block once wired to GHL.
+  */
+  const form    = document.getElementById('asl-map-form');
+  const success = document.getElementById('form-success');
+
+  form.addEventListener('submit', function (e) {
+    // Remove this block when GHL action URL is set:
+    if (form.action === '#' || form.action.endsWith('#')) {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      form.style.display = 'none';
+      success.style.display = 'block';
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // When GHL URL is in the action, remove the preventDefault above
+    // and GHL will handle submission + success page redirect.
+  });
+</script>
+
+</body>
+</html>
