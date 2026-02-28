@@ -361,6 +361,23 @@ main { padding-top:var(--header-height); }
 .pro-modal__close { position:absolute; top:var(--space-sm); right:var(--space-sm); background:none; border:none; cursor:pointer; padding:.5rem; border-radius:var(--radius); color:var(--tcs-text-muted); display:flex; align-items:center; justify-content:center; transition:color var(--transition-fast),background var(--transition-fast); }
 .pro-modal__close:hover { color:var(--tcs-teal-dark); background:var(--tcs-cream-bg); }
 
+/* Chooser modal — "Which best describes you?" */
+.pro-chooser__title { font-size:1.375rem; font-weight:800; color:var(--tcs-teal-dark); margin-bottom:.375rem; letter-spacing:-.02em; }
+.pro-chooser__sub { font-size:.9375rem; color:var(--tcs-text-light); margin-bottom:var(--space-md); }
+.pro-chooser__cards { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-sm); }
+@media(max-width:560px) { .pro-chooser__cards{grid-template-columns:1fr;} }
+.pro-chooser__card { border:2px solid var(--tcs-border); border-radius:var(--radius-lg); padding:var(--space-md); display:flex; flex-direction:column; gap:.5rem; background:var(--tcs-cream-bg); transition:border-color var(--transition),box-shadow var(--transition); }
+.pro-chooser__card:not(.pro-chooser__card--disabled):hover { border-color:var(--tcs-teal-light); box-shadow:var(--shadow-md); }
+.pro-chooser__card--disabled { opacity:.6; }
+.pro-chooser__card-icon { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.pro-chooser__card-title { font-size:.9375rem; font-weight:800; color:var(--tcs-teal-dark); margin-bottom:0; line-height:1.3; }
+.pro-chooser__card-types { font-size:.75rem; color:var(--tcs-text-muted); line-height:1.6; flex:1; margin-bottom:0; }
+.pro-chooser__card-btn { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; font-family:var(--font-main); font-size:.75rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; text-decoration:none; padding:.625rem 1rem; border-radius:var(--radius); border:2px solid transparent; cursor:pointer; transition:all var(--transition-fast); white-space:nowrap; margin-top:auto; }
+.pro-chooser__card-btn--terra { background:var(--tcs-terra); color:var(--tcs-white); border-color:var(--tcs-terra); }
+.pro-chooser__card-btn--terra:hover { background:var(--tcs-terra-dark); border-color:var(--tcs-terra-dark); color:var(--tcs-white); }
+.pro-chooser__card-btn--muted { background:var(--tcs-cream-light); color:var(--tcs-text-muted); border-color:var(--tcs-border); cursor:not-allowed; pointer-events:none; }
+.pro-chooser__soon { font-size:.6875rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; color:var(--tcs-gold); margin-bottom:0; }
+
 /* Utilities */
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border-width:0; }
 @media(max-width:767px) { .section{padding:var(--space-xl) 0;} .hide-mobile{display:none;} }

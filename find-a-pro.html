@@ -82,8 +82,7 @@
             <p>Every professional on this map has been vetted and approved by TCS Real Estate International. Browse by type and connect with someone who communicates in your language.</p>
           </div>
           <div class="pro-hero__cta">
-            <!-- PLACEHOLDER: Replace href with GHL form URL when available -->
-            <a href="#get-on-map-form-placeholder" class="btn btn--primary pro-hero__apply-btn">Get on the Map</a>
+            <button type="button" class="btn btn--primary pro-hero__apply-btn js-open-chooser">Get on the Map</button>
             <p class="pro-hero__apply-note">Are you an ASL-fluent real estate professional? Apply to be listed in our directory.</p>
           </div>
         </div>
@@ -195,12 +194,51 @@
         <span class="eyebrow">Are You a Professional?</span>
         <h2>Get on the Map</h2>
         <p style="max-width:560px; margin:0 auto var(--space-lg);">If you are an ASL-fluent real estate professional who serves the Deaf community, apply to be listed in the TCS Real Estate International directory. All listings are reviewed and approved before going live.</p>
-        <!-- PLACEHOLDER: Replace href with GHL form URL when available -->
-        <a href="#get-on-map-form-placeholder" class="btn btn--gold">Apply to Be Listed</a>
+        <button type="button" class="btn btn--gold js-open-chooser">Apply to Be Listed</button>
       </div>
     </section>
 
   </main>
+
+  <!-- Chooser Modal — shown when "Get on the Map" / "Apply to Be Listed" is clicked -->
+  <div id="chooser-modal" class="pro-modal" role="dialog" aria-modal="true" aria-labelledby="chooser-modal-title" hidden>
+    <div class="pro-modal__overlay" id="chooser-overlay"></div>
+    <div class="pro-modal__content">
+      <button class="pro-modal__close" id="chooser-close" aria-label="Close this dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <span class="eyebrow">Get on the Map</span>
+      <h2 id="chooser-modal-title" class="pro-chooser__title">Which best describes you?</h2>
+      <p class="pro-chooser__sub">Select the correct application so we can get you listed and verified.</p>
+      <div class="pro-chooser__cards">
+
+        <!-- Non-Realtor card -->
+        <div class="pro-chooser__card">
+          <div class="pro-chooser__card-icon" style="background:#1a7a94;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          </div>
+          <p class="pro-chooser__card-title">Non-Realtor Professional</p>
+          <p class="pro-chooser__card-types">Lenders &middot; Inspectors &middot; Title / Escrow &middot; Attorneys &middot; Contractors &middot; Appraisers &middot; and more</p>
+          <a href="https://api.leadconnectorhq.com/widget/form/5rA9H1afQmWc7OM9bfZL" target="_blank" rel="noopener noreferrer" class="pro-chooser__card-btn pro-chooser__card-btn--terra">
+            Apply as a Non-Realtor Pro
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+
+        <!-- Realtor card — coming soon -->
+        <div class="pro-chooser__card pro-chooser__card--disabled" aria-label="Real Estate Agent application — coming soon">
+          <div class="pro-chooser__card-icon" style="background:#0c414e;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <p class="pro-chooser__card-title">Real Estate Agent / Broker</p>
+          <p class="pro-chooser__card-types">ASL-fluent licensed Realtors who agree to TCS REI referral terms for Deaf and HoH client connections</p>
+          <p class="pro-chooser__soon">Application Coming Soon</p>
+          <span class="pro-chooser__card-btn pro-chooser__card-btn--muted" aria-disabled="true">Coming Soon</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- Referral Modal — shown when a client clicks a Real Estate Agent marker (non-owner) -->
   <div id="referral-modal" class="pro-modal" role="dialog" aria-modal="true" aria-labelledby="referral-modal-title" hidden>
@@ -439,6 +477,33 @@
     });
 
     updateCount(markers.length);
+
+    /* ============================================================
+       Chooser Modal — "Which best describes you?"
+       ============================================================ */
+    const chooserModal   = document.getElementById('chooser-modal');
+    const chooserClose   = document.getElementById('chooser-close');
+    const chooserOverlay = document.getElementById('chooser-overlay');
+
+    function openChooserModal() {
+      chooserModal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      chooserClose.focus();
+    }
+
+    function closeChooserModal() {
+      chooserModal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.js-open-chooser').forEach(function(btn) {
+      btn.addEventListener('click', openChooserModal);
+    });
+    chooserClose.addEventListener('click', closeChooserModal);
+    chooserOverlay.addEventListener('click', closeChooserModal);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !chooserModal.hidden) closeChooserModal();
+    });
 
     /* ============================================================
        Referral Modal
