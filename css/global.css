@@ -310,7 +310,7 @@ main { padding-top:var(--header-height); }
 .pro-hero__cta { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-xs); }
 @media(min-width:768px) { .pro-hero__cta{align-items:flex-end; text-align:right;} }
 .pro-hero__apply-btn { white-space:nowrap; }
-.pro-hero__apply-note { font-size:.8125rem; color:rgba(245,239,233,.75); max-width:24ch; line-height:1.5; margin-bottom:0; }
+.pro-hero__apply-note { font-size:1rem; font-weight:600; color:var(--tcs-cream-light); max-width:32ch; line-height:1.5; margin-bottom:0; }
 
 /* Filter bar */
 .pro-filter-bar { display:flex; align-items:center; flex-wrap:wrap; gap:.75rem var(--space-md); margin-bottom:var(--space-md); }
