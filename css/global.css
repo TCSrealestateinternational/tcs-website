@@ -81,6 +81,7 @@ img { max-width:100%; height:auto; display:block; }
 .section { padding:var(--space-2xl) 0; }
 .section--cream { background:var(--tcs-cream-bg); }
 .section--white { background:var(--tcs-white); }
+.section--alt { background:var(--tcs-cream-light); }
 .section--teal { background:var(--tcs-teal-dark); color:var(--tcs-cream-light); }
 .section--teal h2,.section--teal h3 { color:var(--tcs-cream-light); }
 .section--teal .eyebrow { color:var(--tcs-gold-light); }
@@ -117,6 +118,16 @@ img { max-width:100%; height:auto; display:block; }
 /* Cards */
 .card { background:var(--tcs-white); border-radius:var(--radius-lg); padding:var(--space-lg); box-shadow:var(--shadow-sm); transition:box-shadow var(--transition),transform var(--transition); border:1px solid var(--tcs-border); }
 .card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+
+/* Programs / feature grid (accessibility.html and similar pages) */
+.programs-grid { display:grid; grid-template-columns:1fr; gap:var(--space-md); }
+@media(min-width:600px) { .programs-grid{grid-template-columns:repeat(2,1fr);} }
+@media(min-width:1024px) { .programs-grid{grid-template-columns:repeat(3,1fr);} }
+.program-card { background:var(--tcs-white); border-radius:var(--radius-lg); padding:var(--space-md); border:1px solid var(--tcs-border); box-shadow:var(--shadow-sm); }
+.program-card__icon { width:32px; height:32px; color:var(--tcs-teal); margin-bottom:.75rem; }
+.program-card__icon svg { width:32px; height:32px; display:block; }
+.program-card h3 { font-size:1rem; margin-bottom:.375rem; }
+.program-card p { font-size:.9375rem; color:var(--tcs-text-light); margin-bottom:0; }
 
 /* Header */
 .site-header {
